@@ -697,7 +697,7 @@ namespace ToDoListAPI.Services
         {
             try
             {
-                // Get available users (exclude owner and admin)
+                // Get available users (exclude owner)
                 var ownerIDOfToDoItem = await dbContext.ToDoItems
                     .Where(x => x.ID == toDoItemID)
                     .Select(x => x.UserID)

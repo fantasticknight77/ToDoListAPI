@@ -27,13 +27,13 @@ namespace ToDoListAPI.Controllers
 
 
 
-        // GET: api/ToDoItem        
+        // GET: api/todoitem        
         /// <summary>
         /// Gets todo items.
         /// </summary>
         /// <param name="request">The request.</param>
         [HttpPost("get-todo-items")]
-        public async Task<IActionResult> GetToDoItems(GetToDoItemsRequest request)
+        public async Task<IActionResult> GetToDoItems([FromBody] GetToDoItemsRequest request)
         {
             GetToDoItemsResponse response = await toDoItemService.GetToDoItems(request);
 
@@ -47,13 +47,13 @@ namespace ToDoListAPI.Controllers
 
 
 
-        // GET: api/ToDoItem/5        
+        // GET: api/todoitem/5        
         /// <summary>
         /// Gets todo item.
         /// </summary>
         /// <param name="id">The id of todo item.</param>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetToDoItem(int id)
+        public async Task<IActionResult> GetToDoItem([FromRoute] int id)
         {
             GetToDoItemResponse response = await toDoItemService.GetToDoItem(id);
 
@@ -67,7 +67,7 @@ namespace ToDoListAPI.Controllers
 
 
 
-        // PUT: api/ToDoItem/5
+        // PUT: api/todoitem/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754        
         /// <summary>
         /// Updates todo item.
@@ -75,7 +75,7 @@ namespace ToDoListAPI.Controllers
         /// <param name="id">The id of todo item.</param>
         /// <param name="request">The request.</param>
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateToDoItem(int id, UpdateToDoItemRequest request)
+        public async Task<IActionResult> UpdateToDoItem([FromRoute] int id, [FromBody] UpdateToDoItemRequest request)
         {
             UpdateToDoItemResponse response = await toDoItemService.UpdateToDoItem(id, request);
 
@@ -89,14 +89,14 @@ namespace ToDoListAPI.Controllers
 
 
 
-        // POST: api/ToDoItem
+        // POST: api/todoitem
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754        
         /// <summary>
         /// Creates todo item.
         /// </summary>
         /// <param name="request">The request.</param>
         [HttpPost]
-        public async Task<IActionResult> CreateToDoItem(CreateToDoItemRequest request)
+        public async Task<IActionResult> CreateToDoItem([FromBody] CreateToDoItemRequest request)
         {
             CreateToDoItemResponse response = await toDoItemService.CreateToDoItem(request);
 
@@ -110,13 +110,13 @@ namespace ToDoListAPI.Controllers
 
 
 
-        // DELETE: api/ToDoItem/5        
+        // DELETE: api/todoitem/5        
         /// <summary>
         /// Deletes todo item.
         /// </summary>
         /// <param name="id">The id of the todo item.</param>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteToDoItem(int id)
+        public async Task<IActionResult> DeleteToDoItem([FromRoute] int id)
         {
             DeleteToDoItemResponse response = await toDoItemService.DeleteToDoItem(id);
 
@@ -130,12 +130,12 @@ namespace ToDoListAPI.Controllers
 
 
 
-        // GET: api/ToDoItem/get-available-users/5        
+        // GET: api/todoitem/get-available-users/5        
         /// <summary>
         /// Gets the available users to share.
         /// </summary>
         [HttpGet("get-available-users/{id}")]
-        public async Task<IActionResult> GetAvailableUsersToShare(int id)
+        public async Task<IActionResult> GetAvailableUsersToShare([FromRoute] int id)
         {
             GetAvailableUsersToShareResponse response = await toDoItemService.GetAvailableUsersToShare(id);
 
@@ -149,14 +149,14 @@ namespace ToDoListAPI.Controllers
 
 
 
-        // POST: api/ToDoItem/share/5        
+        // POST: api/todoitem/share/5        
         /// <summary>
         /// Shares todo item.
         /// </summary>
         /// <param name="id">The id of the todo item.</param>
         /// <param name="request">The request.</param>
         [HttpPost("share/{id}")]
-        public async Task<IActionResult> ShareToDoItem(int id, [FromBody] List<int> request)
+        public async Task<IActionResult> ShareToDoItem([FromRoute] int id, [FromBody] List<int> request)
         {
             ShareToDoItemResponse response = await toDoItemService.ShareToDoItem(id, request);
 

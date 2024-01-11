@@ -9,6 +9,6 @@
         /// <summary>
         /// Todo items to be retrieved.
         /// </summary>
-        public IEnumerable<ToDoItemDTO> ToDoItems { get; set; } = Enumerable.Empty<ToDoItemDTO>();
+        public List<ToDoItemDTO> ToDoItems { get; set; } = new List<ToDoItemDTO>();
     }
 }

@@ -36,7 +36,6 @@ namespace ToDoListAPI.Services
             {
                 // Get available users
                 var users = await dbContext.Users
-                    .Where(x => x.Role != UserRoles.ADMIN)
                     .Select(x => new UserDTO
                     {
                         ID = x.ID,
@@ -82,7 +81,7 @@ namespace ToDoListAPI.Services
             {
                 // Get user
                 var user = await dbContext.Users
-                    .Where(x => x.Role != UserRoles.ADMIN && x.ID == id)
+                    .Where(x => x.ID == id)
                     .Select(x => new UserDTO
                     {
                         ID = x.ID,
@@ -137,7 +136,7 @@ namespace ToDoListAPI.Services
             try
             {
                 // Find User
-                var userToUpdate = await dbContext.Users.FirstOrDefaultAsync(x => x.ID == id && x.Username != "admin");
+                var userToUpdate = await dbContext.Users.FirstOrDefaultAsync(x => x.ID == id && x.Email != "admin@example.com");
 
                 if (userToUpdate == null)
                 {

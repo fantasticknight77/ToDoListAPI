@@ -27,7 +27,7 @@ namespace ToDoListAPI.Controllers
 
 
 
-        // GET: api/User        
+        // GET: api/user        
         /// <summary>
         /// Gets the users.
         /// </summary>
@@ -46,13 +46,13 @@ namespace ToDoListAPI.Controllers
 
 
 
-        // GET: api/User/5        
+        // GET: api/user/5        
         /// <summary>
         /// Gets the user.
         /// </summary>
         /// <param name="id">The id of the user.</param>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(int id)
+        public async Task<IActionResult> GetUser([FromRoute] int id)
         {
             GetUserResponse response = await userService.GetUser(id);
 
@@ -66,13 +66,13 @@ namespace ToDoListAPI.Controllers
 
 
 
-        // POST: api/User/change-role/5                
+        // POST: api/user/change-role/5                
         /// <summary>
         /// Changes the user role.
         /// </summary>
         /// <param name="request">The request.</param>
         [HttpPost("change-role/{id}")]
-        public async Task<IActionResult> ChangeUserRole(int id, ChangeUserRoleRequest request)
+        public async Task<IActionResult> ChangeUserRole([FromRoute] int id, [FromBody] ChangeUserRoleRequest request)
         {
             ChangeUserRoleResponse response = await userService.ChangeUserRole(id, request);
 

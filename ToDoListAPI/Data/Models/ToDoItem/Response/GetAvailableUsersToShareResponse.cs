@@ -9,6 +9,6 @@
         /// <summary>
         /// The available users to share.
         /// </summary>
-        public List<AvailableUserToShare> Users {  get; set; } = new List<AvailableUserToShare>();
+        public List<AvailableUserToShare> Users { get; set; } = new List<AvailableUserToShare>();
     }
 }

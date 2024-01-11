@@ -24,7 +24,7 @@ namespace ToDoListAPI.Controllers
 
 
 
-        // api/Authentication/login        
+        // api/authentication/login        
         /// <summary>
         /// Logins the user.
         /// </summary>
@@ -45,7 +45,7 @@ namespace ToDoListAPI.Controllers
 
 
 
-        // api/Authentication/register        
+        // api/authentication/register        
         /// <summary>
         /// Registers the user.
         /// </summary>
