@@ -605,7 +605,7 @@ namespace ToDoListAPI.Services
 
 
 
-                // Application with user role can only access todo items related to the user.
+                // Application with user role can only delete todo item owned by them.
                 if (validateUserResponse.User!.Role == UserRoles.USER 
                     && toDoItemToDelete.UserID != validateUserResponse.User!.ID)
                 {
@@ -787,7 +787,7 @@ namespace ToDoListAPI.Services
 
 
 
-                // Application with user role can only access todo items related to the user.
+                // Only owner can share todo item.
                 if (toDoItemToShare.UserID != validateUserResponse.User!.ID)
                 {
                     logger.LogError("[{0}]: You Cannot Share This ToDo Item!", DateTime.UtcNow.ToString());
