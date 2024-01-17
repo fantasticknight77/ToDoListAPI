@@ -165,13 +165,29 @@ namespace ToDoListAPI.UnitTests
 
             mockApplicationContext.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
-            UserService userService = new UserService(mockApplicationContext.Object, mockLogger.Object);
+			AuthenticationService.CreatePasswordHash("Testing123*", out byte[] passwordHash, out byte[] passwordSalt);
+
+			List<User> users = new List<User>
+			{
+				new User
+				{
+					ID = 1,
+					Username = "Test",
+					Email = "test@example.com",
+					PasswordHash = passwordHash,
+					PasswordSalt = passwordSalt,
+					Role = UserRoles.USER,
+					ConcurrencyToken = passwordHash
+				}
+			};
+
+			mockApplicationContext.Setup(x => x.Users).ReturnsDbSet(users);
+
+			UserService userService = new UserService(mockApplicationContext.Object, mockLogger.Object);
 
 
 
             // Act
-            AuthenticationService.CreatePasswordHash("Testing123*", out byte[] passwordHash, out byte[] passwordSalt);
-
             ChangeUserRoleRequest testRequest = new ChangeUserRoleRequest
             {
                 Role = UserRoles.ADMIN,
@@ -313,13 +329,29 @@ namespace ToDoListAPI.UnitTests
 
             mockApplicationContext.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).Throws(new Exception());
 
-            UserService userService = new UserService(mockApplicationContext.Object, mockLogger.Object);
+			AuthenticationService.CreatePasswordHash("Testing123*", out byte[] passwordHash, out byte[] passwordSalt);
+
+			List<User> users = new List<User>
+			{
+				new User
+				{
+					ID = 1,
+					Username = "Test",
+					Email = "test@example.com",
+					PasswordHash = passwordHash,
+					PasswordSalt = passwordSalt,
+					Role = UserRoles.USER,
+					ConcurrencyToken = passwordHash
+				}
+			};
+
+			mockApplicationContext.Setup(x => x.Users).ReturnsDbSet(users);
+
+			UserService userService = new UserService(mockApplicationContext.Object, mockLogger.Object);
 
 
 
             // Act
-            AuthenticationService.CreatePasswordHash("Testing123*", out byte[] passwordHash, out byte[] passwordSalt);
-
             ChangeUserRoleRequest testRequest = new ChangeUserRoleRequest
             {
                 Role = UserRoles.ADMIN,

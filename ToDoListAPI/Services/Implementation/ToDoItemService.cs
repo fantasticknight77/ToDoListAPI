@@ -193,6 +193,7 @@ namespace ToDoListAPI.Services
 
                 // Initialize base query
                 var toDoItem = await dbContext.ToDoItems
+                    .Include(x => x.User)
                     .Include(x => x.ToDoItemTags)
                     .Where(x => x.ID == id)
                     .FirstOrDefaultAsync();
@@ -385,9 +386,11 @@ namespace ToDoListAPI.Services
                     // Update todo item
                     if (toDoItemModified)
                     {
+                        if (!toDoItemToUpdate.ConcurrencyToken.SequenceEqual(request.ConcurrencyToken)) throw new DbUpdateConcurrencyException();
+
                         toDoItemToUpdate.ConcurrencyToken = request.ConcurrencyToken;
 
-                        toDoItemToUpdate.Name = request.Name;
+						toDoItemToUpdate.Name = request.Name;
                         toDoItemToUpdate.Description = request.Description;
                         toDoItemToUpdate.DueDate = request.DueDate;
                         toDoItemToUpdate.Status = request.Status;

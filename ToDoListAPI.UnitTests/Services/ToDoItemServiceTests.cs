@@ -7,10 +7,8 @@ using ToDoListAPI.Services;
 using Moq.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
-using System.Data.Common;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
-using NuGet.Protocol.Core.Types;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace ToDoListAPI.UnitTests
@@ -523,13 +521,49 @@ namespace ToDoListAPI.UnitTests
 
             mockApplicationContext.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
-            ToDoItemService toDoItemService = new ToDoItemService(mockLogger.Object, mockApplicationContext.Object, mockHttpContextAccessor.Object);
+			AuthenticationService.CreatePasswordHash("Testing123*", out byte[] passwordHash, out byte[] passwordSalt);
+
+			List<ToDoItem> toDoItems = new List<ToDoItem>
+			{
+				new ToDoItem
+				{
+					ID = 1,
+					Name = "Test1",
+					Description = "Test1",
+					DueDate = DateTime.Parse("2024-09-08 14:40:52"),
+					Status = ToDoItemStatus.NOTSTARTED,
+					Priority = ToDoItemPriority.LOW,
+					UserID = 1,
+					User = new User
+					{
+						ID = 1,
+						Username = "Test1",
+						Email = "test1@example.com",
+						PasswordHash = passwordHash,
+						PasswordSalt = passwordSalt,
+						Role = UserRoles.USER,
+						ConcurrencyToken = passwordHash
+					},
+					ToDoItemTags = new List<ToDoItemTag>
+					{
+						new ToDoItemTag
+						{
+							ID = 1,
+							Name = "Test1",
+							ToDoItemID = 1,
+						}
+					},
+					ConcurrencyToken = passwordHash
+				}
+			};
+
+			mockApplicationContext.Setup(x => x.ToDoItems).ReturnsDbSet(toDoItems);
+
+			ToDoItemService toDoItemService = new ToDoItemService(mockLogger.Object, mockApplicationContext.Object, mockHttpContextAccessor.Object);
 
 
 
-            // Act
-            AuthenticationService.CreatePasswordHash("Testing123*", out byte[] passwordHash, out byte[] passwordSalt);
-
+            // Act          
             var testRequest = new UpdateToDoItemRequest
             {
                 Name = "Test1Modify",
@@ -980,13 +1014,49 @@ namespace ToDoListAPI.UnitTests
 
             mockApplicationContext.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).Throws(new Exception());
 
-            ToDoItemService toDoItemService = new ToDoItemService(mockLogger.Object, mockApplicationContext.Object, mockHttpContextAccessor.Object);
+			AuthenticationService.CreatePasswordHash("Testing123*", out byte[] passwordHash, out byte[] passwordSalt);
+
+			List<ToDoItem> toDoItems = new List<ToDoItem>
+			{
+				new ToDoItem
+				{
+					ID = 1,
+					Name = "Test1",
+					Description = "Test1",
+					DueDate = DateTime.Parse("2024-09-08 14:40:52"),
+					Status = ToDoItemStatus.NOTSTARTED,
+					Priority = ToDoItemPriority.LOW,
+					UserID = 1,
+					User = new User
+					{
+						ID = 1,
+						Username = "Test1",
+						Email = "test1@example.com",
+						PasswordHash = passwordHash,
+						PasswordSalt = passwordSalt,
+						Role = UserRoles.USER,
+						ConcurrencyToken = passwordHash
+					},
+					ToDoItemTags = new List<ToDoItemTag>
+					{
+						new ToDoItemTag
+						{
+							ID = 1,
+							Name = "Test1",
+							ToDoItemID = 1,
+						}
+					},
+					ConcurrencyToken = passwordHash
+				}
+			};
+
+			mockApplicationContext.Setup(x => x.ToDoItems).ReturnsDbSet(toDoItems);
+
+			ToDoItemService toDoItemService = new ToDoItemService(mockLogger.Object, mockApplicationContext.Object, mockHttpContextAccessor.Object);
 
 
 
             // Act
-            AuthenticationService.CreatePasswordHash("Testing123*", out byte[] passwordHash, out byte[] passwordSalt);
-
             var testRequest = new UpdateToDoItemRequest
             {
                 Name = "Test1Modify",

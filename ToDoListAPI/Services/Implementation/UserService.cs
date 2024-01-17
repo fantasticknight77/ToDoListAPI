@@ -182,8 +182,11 @@ namespace ToDoListAPI.Services
                 // Update role
                 try
                 {
-                    userToUpdate.ConcurrencyToken = request.ConcurrencyToken;
-                    userToUpdate.Role = request.Role;
+					if (!userToUpdate.ConcurrencyToken.SequenceEqual(request.ConcurrencyToken)) throw new DbUpdateConcurrencyException();
+
+					userToUpdate.ConcurrencyToken = request.ConcurrencyToken;
+
+					userToUpdate.Role = request.Role;
 
                     int updateUserRoleResult = await dbContext.SaveChangesAsync();
 
